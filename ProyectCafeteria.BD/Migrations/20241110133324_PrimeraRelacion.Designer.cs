@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProyectCafeteria.BD.Data;
 
@@ -11,9 +12,11 @@ using ProyectCafeteria.BD.Data;
 namespace ProyectCafeteria.BD.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20241110133324_PrimeraRelacion")]
+    partial class PrimeraRelacion
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -32,8 +35,7 @@ namespace ProyectCafeteria.BD.Migrations
 
                     b.Property<string>("Estado")
                         .IsRequired()
-                        .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Fecha_Orden")
                         .HasColumnType("datetime2");
@@ -46,10 +48,7 @@ namespace ProyectCafeteria.BD.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex(new[] { "Total", "Estado" }, "Orden_Total_Estado");
-
-                    b.HasIndex(new[] { "UsuarioId", "Fecha_Orden" }, "Orden_UQ")
-                        .IsUnique();
+                    b.HasIndex("UsuarioId");
 
                     b.ToTable("Ordenes");
                 });
@@ -64,23 +63,17 @@ namespace ProyectCafeteria.BD.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Nombre")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex(new[] { "Nombre" }, "Usuario_UQ")
-                        .IsUnique();
 
                     b.ToTable("Usuarios");
                 });
