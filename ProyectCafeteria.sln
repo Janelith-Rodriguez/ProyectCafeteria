@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35327.3
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProyectCafeteria.Server", "ProyectCafeteria.Server\ProyectCafeteria.Server.csproj", "{D9E365F0-2FC7-46D0-AA6B-989439218DE9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProyectCafeteria.BD", "ProyectCafeteria.BD\ProyectCafeteria.BD.csproj", "{DAAE8E64-9FE1-4E4F-9B4B-E163BFD62E01}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D9E365F0-2FC7-46D0-AA6B-989439218DE9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D9E365F0-2FC7-46D0-AA6B-989439218DE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D9E365F0-2FC7-46D0-AA6B-989439218DE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D9E365F0-2FC7-46D0-AA6B-989439218DE9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DAAE8E64-9FE1-4E4F-9B4B-E163BFD62E01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DAAE8E64-9FE1-4E4F-9B4B-E163BFD62E01}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DAAE8E64-9FE1-4E4F-9B4B-E163BFD62E01}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DAAE8E64-9FE1-4E4F-9B4B-E163BFD62E01}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1D2DFA62-0E23-4E5A-BCAD-146B55BC13DA}
+	EndGlobalSection
+EndGlobal
