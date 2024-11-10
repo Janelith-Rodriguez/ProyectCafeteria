@@ -22,7 +22,7 @@ namespace ProyectCafeteria.BD.Data.Entity
         [Required(ErrorMessage = "El password del usuario es obligatorio.")]
         [MaxLength(100, ErrorMessage = "Maximo numero de caracteres{1}.")]
         public string Password { get; set; }
-        public List<Orden> Ordenes { get; set; }
+        //public List<Orden> Ordenes { get; set; }
         //public List<Carrito> Carritos { get; set; }
     }
 }
