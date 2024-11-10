@@ -1,8 +1,9 @@
 using Microsoft.EntityFrameworkCore;
+using ProyectCafeteria.BD.Data;
 
+//----------------------------------------------------------------------------------------------------------
+//Configuracion de los servicios en el constructor de la aplicación
 var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -12,8 +13,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<Context>(op => op.UseSqlServer("name=conn"));
 
 
-
-
+//----------------------------------------------------------------------------------------------------------
+//Construcción de la aplicación
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
