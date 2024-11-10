@@ -10,10 +10,28 @@ namespace ProyectCafeteria.BD.Data
 {
     public class Context : DbContext
     {
-        public DbSet<Orden> Ordenes { get; set; }
+        public DbSet<Carrito> Carritos { get; set; }
+         public DbSet<Orden> Ordenes { get; set; }
+        public DbSet<Producto> Productos { get; set; }      
         public DbSet<Usuario> Usuarios { get; set; }
+
         public Context(DbContextOptions options) : base(options)
         {
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+
+            var cascadeFKs = modelBuilder.Model.GetEntityTypes()
+                                          .SelectMany(t => t.GetForeignKeys())
+                                          .Where(fk => !fk.IsOwnership
+                                              && fk.DeleteBehavior == DeleteBehavior.Cascade);
+            foreach (var fk in cascadeFKs)
+            {
+                fk.DeleteBehavior = DeleteBehavior.Restrict;
+            }
+
+            base.OnModelCreating(modelBuilder);
         }
     }
 }

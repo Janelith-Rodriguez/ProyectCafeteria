@@ -23,9 +23,9 @@ namespace ProyectCafeteria.BD.Data.Entity
         [MaxLength(15, ErrorMessage = "Maximo numero de caracteres{1}.")]
         public string Estado { get; set; }
 
-        [Required(ErrorMessage = "El usuario es obligatorio.")]
-        //[MaxLength(50, ErrorMessage = "Maximo numero de caracteres{1}.")]
+        [Required(ErrorMessage = "El usuario de la orden es obligatorio.")]
         public int UsuarioId { get; set; }
         public Usuario Usuario { get; set; }
+        public List<Carrito> Carritos { get; set; }
     }
 }
