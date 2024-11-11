@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using ProyectCafeteria.BD.Data;
 using ProyectCafeteria.BD.Data.Entity;
+using ProyectCafeteria.Shared.DTO;
 
 namespace ProyectCafeteria.Server.Controllers
 {
@@ -22,17 +23,22 @@ namespace ProyectCafeteria.Server.Controllers
         }
 
         [HttpPost]   // Método para crear un nuevo producto al carrito
-        public async Task<ActionResult<int>> Post(Carrito entidad)
+        public async Task<ActionResult<int>> Post(CrearCarritoDTO entidadDTO)
         {
             try
             {
+                Carrito entidad = new Carrito();             
+                entidad.UsuarioId = entidadDTO.UsuarioId;
+                entidad.OrdenId = entidadDTO.OrdenId;
+                entidad.Cantidad = entidadDTO.Cantidad;
+
                 context.Carritos.Add(entidad);
                 await context.SaveChangesAsync();
                 return entidad.Id;
             }
             catch (Exception err)
             {
-                return BadRequest(err.Message);
+                return BadRequest(err.InnerException.Message);
             }
         }
     }
