@@ -26,6 +26,6 @@ namespace ProyectCafeteria.BD.Data.Entity
         [Required(ErrorMessage = "El usuario de la orden es obligatorio.")]
         public int UsuarioId { get; set; }
         public Usuario Usuario { get; set; }
-        public List<Carrito> Carritos { get; set; }
+        //public List<Carrito> Carritos { get; set; }
     }
 }

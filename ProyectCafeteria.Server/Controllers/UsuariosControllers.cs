@@ -100,20 +100,20 @@ namespace ProyectCafeteria.Server.Controllers
             }
         }
 
-        //[HttpDelete("{id:int}")]
-        //public async Task<ActionResult> Delete(int id)
-        //{
-        //    var existe = await context.Usuarios.AnyAsync(x => x.Id == id);
-        //    if (!existe)
-        //    {
-        //        return NotFound($"El usuario {id} no existe.");
-        //    }
-        //    Usuario EntidadABorrar = new Usuario();
-        //    EntidadABorrar.Id = id;
+        [HttpDelete("{id:int}")]
+        public async Task<ActionResult> Delete(int id)
+        {
+            var existe = await context.Usuarios.AnyAsync(x => x.Id == id);
+            if (!existe)
+            {
+                return NotFound($"El usuario {id} no existe.");
+            }
+            Usuario EntidadABorrar = new Usuario();
+            EntidadABorrar.Id = id;
 
-        //    context.Remove(EntidadABorrar);
-        //    await context.SaveChangesAsync();
-        //    return Ok();
-        //}
+            context.Remove(EntidadABorrar);
+            await context.SaveChangesAsync();
+            return Ok();
+        }
     }
 }

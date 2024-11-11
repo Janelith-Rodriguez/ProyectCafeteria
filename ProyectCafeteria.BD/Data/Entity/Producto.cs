@@ -24,6 +24,8 @@ namespace ProyectCafeteria.BD.Data.Entity
 
         [Required(ErrorMessage = "El Stock del producto es obligatorio.")]
         public int Stock { get; set; }
+
+        [Required(ErrorMessage = "El carrito Id del producto es obligatorio.")]
         public int CarritoId { get; set; }
         public Carrito Carrito { get; set; }
 
