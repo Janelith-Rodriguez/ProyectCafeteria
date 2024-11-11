@@ -2,6 +2,8 @@
 using ProyectCafeteria.BD.Data.Entity;
 using ProyectCafeteria.BD.Data;
 using Microsoft.EntityFrameworkCore;
+using ProyectCafeteria.Shared.DTO;
+using AutoMapper;
 
 namespace ProyectCafeteria.Server.Controllers
 {
@@ -10,10 +12,13 @@ namespace ProyectCafeteria.Server.Controllers
     public class UsuariosControllers : ControllerBase
     {
         private readonly Context context;
+        private readonly IMapper mapper;
 
-        public UsuariosControllers(Context context)
+        public UsuariosControllers(Context context,
+                                    IMapper mapper)
         {
             this.context = context;
+            this.mapper = mapper;
         }
 
         [HttpGet]   // Método para ver todos los usuarios
@@ -54,10 +59,17 @@ namespace ProyectCafeteria.Server.Controllers
         //}
 
         [HttpPost]   // Método para crear un nuevo usuario
-        public async Task<ActionResult<int>> Post(Usuario entidad)
+        public async Task<ActionResult<int>> Post(CrearUsuarioDTO entidadDTO)
         {
             try
             {
+                //Usuario entidad = new Usuario();
+                //entidad.Nombre= entidadDTO.Nombre;
+                //entidad.Email= entidadDTO.Email;
+                //entidad.Password= entidadDTO.Password;
+
+                Usuario entidad = mapper.Map<Usuario>(entidadDTO);
+
                 context.Usuarios.Add(entidad);
                 await context.SaveChangesAsync();
                 return entidad.Id;

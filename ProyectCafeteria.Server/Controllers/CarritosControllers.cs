@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ProyectCafeteria.BD.Data;
 using ProyectCafeteria.BD.Data.Entity;
@@ -11,10 +12,13 @@ namespace ProyectCafeteria.Server.Controllers
     public class CarritosControllers : ControllerBase
     {
         private readonly Context context;
+        private readonly IMapper mapper;
 
-        public CarritosControllers(Context context)
+        public CarritosControllers(Context context,
+                                    IMapper mapper)
         {
             this.context = context;
+            this.mapper = mapper;
         }
         [HttpGet]   // Método para ver el carrito
         public async Task<ActionResult<List<Carrito>>> Get()
@@ -27,10 +31,12 @@ namespace ProyectCafeteria.Server.Controllers
         {
             try
             {
-                Carrito entidad = new Carrito();             
-                entidad.UsuarioId = entidadDTO.UsuarioId;
-                entidad.OrdenId = entidadDTO.OrdenId;
-                entidad.Cantidad = entidadDTO.Cantidad;
+                //Carrito entidad = new Carrito();             
+                //entidad.UsuarioId = entidadDTO.UsuarioId;
+                //entidad.OrdenId = entidadDTO.OrdenId;
+                //entidad.Cantidad = entidadDTO.Cantidad;
+
+                Carrito entidad = mapper.Map<Carrito>(entidadDTO);
 
                 context.Carritos.Add(entidad);
                 await context.SaveChangesAsync();
