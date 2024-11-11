@@ -1,17 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
-namespace ProyectCafeteria.BD.Data.Entity
+namespace ProyectCafeteria.Shared.DTO
 {
-    [Index(nameof(UsuarioId), nameof(Fecha_Orden), Name = "Orden_UQ", IsUnique = true)]
-    [Index(nameof(Total), nameof(Estado), Name = "Orden_Total_Estado", IsUnique = false)]
-    public class Orden : EntityBase
+    public class CrearOrdenDTO
     {
         [Required(ErrorMessage = "La fecha de la orden obligatorio.")]
         public DateTime Fecha_Orden { get; set; }
@@ -25,7 +21,6 @@ namespace ProyectCafeteria.BD.Data.Entity
 
         [Required(ErrorMessage = "El usuario de la orden es obligatorio.")]
         public int UsuarioId { get; set; }
-        public Usuario Usuario { get; set; }
-        public List<Carrito> Carritos { get; set; }
+        //public Usuario Usuario { get; set; }
     }
 }

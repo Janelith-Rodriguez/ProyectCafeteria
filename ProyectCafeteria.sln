@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProyectCafeteria.Server", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProyectCafeteria.BD", "ProyectCafeteria.BD\ProyectCafeteria.BD.csproj", "{DAAE8E64-9FE1-4E4F-9B4B-E163BFD62E01}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProyectCafeteria.Shared", "ProyectCafeteria.Shared\ProyectCafeteria.Shared.csproj", "{25F8374D-111E-4624-9511-1A2E15AA7D8C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{DAAE8E64-9FE1-4E4F-9B4B-E163BFD62E01}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DAAE8E64-9FE1-4E4F-9B4B-E163BFD62E01}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DAAE8E64-9FE1-4E4F-9B4B-E163BFD62E01}.Release|Any CPU.Build.0 = Release|Any CPU
+		{25F8374D-111E-4624-9511-1A2E15AA7D8C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{25F8374D-111E-4624-9511-1A2E15AA7D8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{25F8374D-111E-4624-9511-1A2E15AA7D8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{25F8374D-111E-4624-9511-1A2E15AA7D8C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
