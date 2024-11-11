@@ -1,0 +1,115 @@
+﻿@page "/api/Usuarios"
+@inject IHttpServicio http
+
+<h3>Lista de Usuarios</h3>
+<br />
+<a class="btn btn-primary" href="/api/Usuarios/crear">Nuevo usuario</a>
+<br />
+<table>
+    <tr>
+        <th>Nombre</th>
+        <th>Email</th>
+        <th>Password</th>
+    </tr>
+    @if (Mensaje == "")
+    {
+        @if (listaUsuarios == null)
+        {
+            <p>Buscando....</p>
+        }
+        else if(listaUsuarios.Count == 0)
+        {
+            <p>No existen los usuarios</p>
+        }
+        else
+        {
+            @foreach (var item in listaUsuarios)
+            {
+                <tr>
+                    <td>@item.Nombre</td>
+                    <td>@item.Email</td>
+                    <td>@item.Password</td>
+                    <td>
+                        <a class="btn btn-primary"
+                           href="api/Usuarios/editar/@item.Id">
+                            Editar
+                        </a>
+                    </td>
+                    <td>
+                        <button class="btn btn-danger"
+                           @onclick = "()=>Eliminar(item)">
+                            Borrar
+                        </button>
+                    </td>
+                </tr>
+            }
+        }
+    }
+    else
+    {
+        <p> Error: @Mensaje</p>
+    }
+</table>
+
+<Confirmacion @ref="confirmacion"
+              Titulo="CUIDADO"
+              textCancelar="Salir"
+              onCancel="Cancelar"
+              onConfirm="Borrar">
+              <h5>Está por borrar el usuario</h5>
+              <br />
+              <p>Está seguro?</p>
+</Confirmacion>
+
+@code {
+    Confirmacion  confirmacion;
+
+    List<Usuario> listaUsuarios;
+    Usuario tUsuario;
+    string Mensaje = "";
+
+    Usuario? UsuaBorrar = null;//
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        await Leer();
+    }
+
+    private async Task Leer()
+    {
+        var resp = await http.Get<List<Usuario>>("api/Usuarios");
+        if (!resp.Error)
+        {
+            listaUsuarios = resp.Respuesta;
+        }
+        else
+        {
+            Mensaje = await resp.ObtenerError();
+        }
+    }
+
+    private async Task Eliminar(Usuario usuario)
+    {
+        UsuaBorrar = usuario;
+        confirmacion.Ver();
+    }
+
+    private void Cancelar()
+    {
+        confirmacion.Ocultar();
+        UsuaBorrar = null;
+    }
+
+    private async Task Borrar()
+    {
+        var respuesta = await http.Delete($"api/Usuarios/{UsuaBorrar.Id}");
+        if (respuesta.Error)
+        {
+            var body = "No se pudo borrar";
+        }
+        Cancelar();
+        await Leer();
+    }
+
+}

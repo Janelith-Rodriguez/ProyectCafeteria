@@ -1,0 +1,81 @@
+﻿@page "/api/Usuarios/editar/{UsuarioId:int}"
+@inject IHttpServicio http
+@inject NavigationManager navigationManager
+
+<h3>Editar Usuario</h3>
+
+<h1>@lia</h1>
+
+<EditForm Model="Usuario" OnValidSubmit="Grabar">
+    <DataAnnotationsValidator />
+    <div class="form-group">
+        <label>Nombre</label>
+        <div>
+            <InputText class="form-control" @bind-Value="@Usuario.Nombre" />
+            <ValidationMessage For="@(() => Usuario.Nombre)" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Email</label>
+        <div>
+            <InputText class="form-control" @bind-Value="@Usuario.Email" />
+            <ValidationMessage For="@(() => Usuario.Email)" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Password</label>
+        <div>
+            <InputText class="form-control" @bind-Value="@Usuario.Password" />
+            <ValidationMessage For="@(() => Usuario.Password)" />
+        </div>
+    </div>
+    <br />
+    <button class="btn btn-primary" type="submit">Aceptar</button>
+    <button class="btn btn-secondary" @onclick="Cancelar">Cancelar</button>
+</EditForm>
+
+@code {
+    [Parameter] public int UsuarioId { get; set; }
+    private Usuario Usuario = new Usuario();
+
+    string lia = "";
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        await Mostrar();
+    }
+
+    private async Task Mostrar()
+    {
+        var respuesta = await http.Get<Usuario>($"api/Usuarios/{UsuarioId}");
+
+        if (!respuesta.Error)
+        {
+            Usuario = respuesta.Respuesta;
+        }
+        else
+        {
+            navigationManager.NavigateTo("/api/Usuarios");
+        }
+    }
+
+
+
+    private async Task Grabar()
+    {
+        //Usuario.Orden = new List<Orden>();
+
+        var httpRespuesta = await http.Put<Usuario>($"api/Usuarios/{UsuarioId}", Usuario);
+        if (httpRespuesta.Error)
+        {
+            var body = httpRespuesta.HttpResponseMessage;
+        }
+        navigationManager.NavigateTo("/api/Usuarios");
+    }
+
+    private void Cancelar()
+    {
+        navigationManager.NavigateTo("/api/Usuarios");
+    }
+}

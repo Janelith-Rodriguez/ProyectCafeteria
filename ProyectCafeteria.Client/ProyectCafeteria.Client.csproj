@@ -12,7 +12,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Servicios\" />
+    <ProjectReference Include="..\ProyectCafeteria.BD\ProyectCafeteria.BD.csproj" />
+    <ProjectReference Include="..\ProyectCafeteria.Shared\ProyectCafeteria.Shared.csproj" />
   </ItemGroup>
 
 </Project>
