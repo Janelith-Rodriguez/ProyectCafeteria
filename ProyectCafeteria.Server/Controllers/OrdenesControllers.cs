@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ProyectCafeteria.BD.Data;
 using ProyectCafeteria.BD.Data.Entity;
+using ProyectCafeteria.Server.Repositorio;
 using ProyectCafeteria.Shared.DTO;
 
 namespace ProyectCafeteria.Server.Controllers
@@ -11,19 +12,19 @@ namespace ProyectCafeteria.Server.Controllers
     [Route("api/Ordenes")]
     public class OrdenesControllers : ControllerBase
     {
-        private readonly Context context;
+        private readonly IOrdenRepositorio repositorio;
         private readonly IMapper mapper;
 
-        public OrdenesControllers(Context context,
+        public OrdenesControllers(IOrdenRepositorio repositorio,
                                   IMapper mapper)
         {
-            this.context = context;
+            this.repositorio = repositorio;
             this.mapper = mapper;
         }
         [HttpGet]   // Método para ver todas las ordenes
         public async Task<ActionResult<List<Orden>>> Get()
         {
-            return await context.Ordenes.ToListAsync();
+            return await repositorio.Select();
         }
 
         [HttpPost]   // Método para crear un nuevo usuario
@@ -39,9 +40,7 @@ namespace ProyectCafeteria.Server.Controllers
 
                 Orden entidad = mapper.Map<Orden>(entidadDTO);
 
-                context.Ordenes.Add(entidad);
-                await context.SaveChangesAsync();
-                return entidad.Id;
+                return await repositorio.Insert(entidad);
             }
             catch (Exception err)
             {

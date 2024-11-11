@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ProyectCafeteria.BD.Data;
 using ProyectCafeteria.BD.Data.Entity;
+using ProyectCafeteria.Server.Repositorio;
 using ProyectCafeteria.Shared.DTO;
 
 namespace ProyectCafeteria.Server.Controllers
@@ -11,19 +12,19 @@ namespace ProyectCafeteria.Server.Controllers
     [Route("api/Carritos")]
     public class CarritosControllers : ControllerBase
     {
-        private readonly Context context;
+        private readonly ICarritoRepositorio repositorio;
         private readonly IMapper mapper;
 
-        public CarritosControllers(Context context,
+        public CarritosControllers(ICarritoRepositorio repositorio,
                                     IMapper mapper)
         {
-            this.context = context;
+            this.repositorio = repositorio;
             this.mapper = mapper;
         }
         [HttpGet]   // Método para ver el carrito
         public async Task<ActionResult<List<Carrito>>> Get()
         {
-            return await context.Carritos.ToListAsync();
+            return await repositorio.Select();
         }
 
         [HttpPost]   // Método para crear un nuevo producto al carrito
@@ -38,9 +39,7 @@ namespace ProyectCafeteria.Server.Controllers
 
                 Carrito entidad = mapper.Map<Carrito>(entidadDTO);
 
-                context.Carritos.Add(entidad);
-                await context.SaveChangesAsync();
-                return entidad.Id;
+                return await repositorio.Insert(entidad);
             }
             catch (Exception err)
             {

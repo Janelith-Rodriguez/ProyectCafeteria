@@ -4,6 +4,7 @@ using ProyectCafeteria.BD.Data;
 using Microsoft.EntityFrameworkCore;
 using ProyectCafeteria.Shared.DTO;
 using AutoMapper;
+using ProyectCafeteria.Server.Repositorio;
 
 namespace ProyectCafeteria.Server.Controllers
 {
@@ -11,19 +12,19 @@ namespace ProyectCafeteria.Server.Controllers
     [Route("api/Productos")]
     public class ProductosControllers : ControllerBase
     {
-        private readonly Context context;
+        private readonly IProductoRepositorio repositorio;
         private readonly IMapper mapper;
 
-        public ProductosControllers(Context context,
+        public ProductosControllers(IProductoRepositorio repositorio,
                                     IMapper mapper)
         {
-            this.context = context;
+            this.repositorio = repositorio;
             this.mapper = mapper;
         }
         [HttpGet]   // Método para ver todas las productos
         public async Task<ActionResult<List<Producto>>> Get()
         {
-            return await context.Productos.ToListAsync();
+            return await repositorio.Select();
         }
 
         [HttpPost]   // Método para crear un nuevo producto
@@ -40,9 +41,7 @@ namespace ProyectCafeteria.Server.Controllers
 
                 Producto entidad = mapper.Map<Producto>(entidadDTO);
 
-                context.Productos.Add(entidad);
-                await context.SaveChangesAsync();
-                return entidad.Id;
+                return await repositorio.Insert(entidad);
             }
             catch (Exception err)
             {

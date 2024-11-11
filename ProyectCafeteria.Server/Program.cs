@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using ProyectCafeteria.BD.Data;
+using ProyectCafeteria.Server.Repositorio;
 using System.Text.Json.Serialization;
 
 //----------------------------------------------------------------------------------------------------------
@@ -21,6 +22,11 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<Context>(op => op.UseSqlServer("name=conn"));
 
 builder.Services.AddAutoMapper(typeof(Program));
+
+builder.Services.AddScoped<IUsuarioRepositorio, UsuarioRepositorio>();
+builder.Services.AddScoped<IOrdenRepositorio, OrdenRepositorio>();
+builder.Services.AddScoped<IProductoRepositorio, ProductoRepositorio>();
+builder.Services.AddScoped<ICarritoRepositorio, CarritoRepositorio>();
 
 //----------------------------------------------------------------------------------------------------------
 //Construcción de la aplicación
