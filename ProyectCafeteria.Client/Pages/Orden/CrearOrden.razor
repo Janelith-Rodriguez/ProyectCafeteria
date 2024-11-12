@@ -1,0 +1,52 @@
+﻿@page "/api/Ordenes/crear"
+@inject IHttpServicio http
+@inject NavigationManager navigationManager
+
+<h3>Crear la Orden</h3>
+
+<EditForm Model="Orden" OnValidSubmit="Grabar">
+    <DataAnnotationsValidator />
+    <div class="form-group">
+        <label>Fecha_Orden</label>
+        <div>
+            <InputDate class="form-control" @bind-Value="@Orden.Fecha_Orden" />
+            <ValidationMessage For="@(() => Orden.Fecha_Orden)" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Total</label>
+        <div>
+            <InputNumber class="form-control" @bind-Value="@Orden.Total" />
+            <ValidationMessage For="@(() => Orden.Total)" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Estado</label>
+        <div>
+            <InputText class="form-control" @bind-Value="@Orden.Estado" />
+            <ValidationMessage For="@(() => Orden.Estado)" />
+        </div>
+    </div>
+    <br />
+    <button class="btn btn-primary" type="submit">Aceptar</button>
+    <button class="btn btn-secondary" @onclick="Cancelar">Cancelar</button>
+</EditForm>
+
+@code {
+    private Orden Orden = new Orden();
+
+    private async Task Grabar()
+    {
+        var httpRespuesta = await http.Post<Orden>("api/Ordenes", Orden);
+        if (httpRespuesta.Error)
+        {
+            var body = httpRespuesta.HttpResponseMessage;
+        }
+        navigationManager.NavigateTo("/api/Ordenes");
+    }
+
+    private void Cancelar()
+    {
+        navigationManager.NavigateTo("/api/Ordenes");
+    }
+}

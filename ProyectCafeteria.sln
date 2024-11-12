@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35327.3
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProyectCafeteria.Server", "ProyectCafeteria.Server\ProyectCafeteria.Server.csproj", "{D9E365F0-2FC7-46D0-AA6B-989439218DE9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProyectCafeteria.Server", "ProyectCafeteria.Server\ProyectCafeteria.Server.csproj", "{D9E365F0-2FC7-46D0-AA6B-989439218DE9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProyectCafeteria.BD", "ProyectCafeteria.BD\ProyectCafeteria.BD.csproj", "{DAAE8E64-9FE1-4E4F-9B4B-E163BFD62E01}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProyectCafeteria.BD", "ProyectCafeteria.BD\ProyectCafeteria.BD.csproj", "{DAAE8E64-9FE1-4E4F-9B4B-E163BFD62E01}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProyectCafeteria.Shared", "ProyectCafeteria.Shared\ProyectCafeteria.Shared.csproj", "{25F8374D-111E-4624-9511-1A2E15AA7D8C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProyectCafeteria.Shared", "ProyectCafeteria.Shared\ProyectCafeteria.Shared.csproj", "{25F8374D-111E-4624-9511-1A2E15AA7D8C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProyectCafeteria.Client", "ProyectCafeteria.Client\ProyectCafeteria.Client.csproj", "{033397AD-9B27-4C82-B581-97EA4D5A537E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProyectCafeteria.Client", "ProyectCafeteria.Client\ProyectCafeteria.Client.csproj", "{033397AD-9B27-4C82-B581-97EA4D5A537E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

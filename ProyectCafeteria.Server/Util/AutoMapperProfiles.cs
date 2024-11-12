@@ -8,7 +8,12 @@ namespace ProyectCafeteria.Server.Util
     {
         public AutoMapperProfiles()
         {
+            CreateMap<CrearUsuarioDTO, Usuario>();
             CreateMap<CrearOrdenDTO, Orden>();
+            CreateMap<CrearProductoDTO, Producto>();
+            CreateMap<CrearCarritoDTO, Carrito>();
+
+
             //CreateMap<Orden, CrearOrdenDTO>();
         }
     }

@@ -1,0 +1,72 @@
+﻿@page "/api/Carritos/crear"
+@inject IHttpServicio http
+@inject NavigationManager navigationManager
+
+<h3>Nuevo Carrito</h3>
+
+<EditForm Model="Carrito" OnValidSubmit="Grabar">
+    <DataAnnotationsValidator />
+
+    <!-- Título de la sección -->
+    <h3>Información del Usuario</h3>
+
+    <!-- Campo UsuarioId -->
+    <div class="form-group mb-4">
+        <label>UsuarioId</label>
+        <div>
+            <InputNumber class="form-control" @bind-Value="@Carrito.UsuarioId" />
+            <ValidationMessage For="@(() => Carrito.UsuarioId)" />
+        </div>
+    </div>
+
+    <!-- Línea de separación -->
+    <hr />
+
+    <!-- Título de otra sección -->
+    <h3>Detalles de la Orden</h3>
+
+    <!-- Campo OrdenId -->
+    <div class="form-group mb-4">
+        <label>OrdenId</label>
+        <div>
+            <InputNumber class="form-control" @bind-Value="@Carrito.OrdenId" />
+            <ValidationMessage For="@(() => Carrito.OrdenId)" />
+        </div>
+    </div>
+
+    <!-- Campo Cantidad -->
+    <div class="form-group mb-4">
+        <label>Cantidad</label>
+        <div>
+            <InputNumber class="form-control" @bind-Value="@Carrito.Cantidad" />
+            <ValidationMessage For="@(() => Carrito.Cantidad)" />
+        </div>
+    </div>
+
+    <!-- Botones con márgenes para separación -->
+    <div class="mt-4">
+        <button class="btn btn-primary me-2" type="submit">Aceptar</button>
+        <button class="btn btn-secondary" @onclick="Cancelar">Cancelar</button>
+    </div>
+</EditForm>
+
+
+@code {
+    private Carrito Carrito = new Carrito();
+
+    private async Task Grabar()
+    {
+        var httpRespuesta = await http.Post<Carrito>("api/Carritos", Carrito);
+        if (httpRespuesta.Error)
+        {
+            var body = httpRespuesta.HttpResponseMessage;
+        }
+        navigationManager.NavigateTo("/api/Carritos");
+    }
+
+    private void Cancelar()
+    {
+        navigationManager.NavigateTo("/api/Carritos");
+    }
+}
+

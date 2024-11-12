@@ -1,0 +1,81 @@
+﻿@page "/api/Carritos/editar"
+@inject IHttpServicio http
+@inject NavigationManager navigationManager
+
+<h3>Editar Carrito</h3>
+
+<h1>@lia</h1>
+
+<EditForm Model="Carrito" OnValidSubmit="Grabar">
+    <DataAnnotationsValidator />
+    <div class="form-group">
+        <label>UsuarioId</label>
+        <div>
+            <InputNumber class="form-control" @bind-Value="@Carrito.UsuarioId" />
+            <ValidationMessage For="@(() => Carrito.UsuarioId)" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label>OrdenId</label>
+        <div>
+            <InputNumber class="form-control" @bind-Value="@Carrito.OrdenId" />
+            <ValidationMessage For="@(() => Carrito.OrdenId)" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Cantidad</label>
+        <div>
+            <InputNumber class="form-control" @bind-Value="@Carrito.Cantidad" />
+            <ValidationMessage For="@(() => Carrito.Cantidad)" />
+        </div>
+    </div>
+    <br />
+    <button class="btn btn-primary" type="submit">Aceptar</button>
+    <button class="btn btn-secondary" @onclick="Cancelar">Cancelar</button>
+</EditForm>
+
+@code {
+    [Parameter] public int CarritoId { get; set; }
+    private Carrito Carrito = new Carrito();
+
+    string lia = "";
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        await Mostrar();
+    }
+
+    private async Task Mostrar()
+    {
+        var respuesta = await http.Get<Carrito>($"api/Carritos");
+
+        if (!respuesta.Error)
+        {
+            Carrito = respuesta.Respuesta;
+        }
+        else
+        {
+            navigationManager.NavigateTo("/api/Carritos");
+        }
+    }
+
+
+
+    private async Task Grabar()
+    {
+        //Usuario.Orden = new List<Orden>();
+
+        var httpRespuesta = await http.Put<Carrito>($"api/Carritos", Carrito);
+        if (httpRespuesta.Error)
+        {
+            var body = httpRespuesta.HttpResponseMessage;
+        }
+        navigationManager.NavigateTo("/api/Carritos");
+    }
+
+    private void Cancelar()
+    {
+        navigationManager.NavigateTo("/api/Carritos");
+    }
+}

@@ -14,6 +14,7 @@
             <ValidationMessage For="@(() => Usuario.Nombre)" />
         </div>
     </div>
+
     <div class="form-group">
         <label>Email</label>
         <div>
@@ -21,6 +22,7 @@
             <ValidationMessage For="@(() => Usuario.Email)" />
         </div>
     </div>
+
     <div class="form-group">
         <label>Password</label>
         <div>
@@ -28,6 +30,7 @@
             <ValidationMessage For="@(() => Usuario.Password)" />
         </div>
     </div>
+
     <br />
     <button class="btn btn-primary" type="submit">Aceptar</button>
     <button class="btn btn-secondary" @onclick="Cancelar">Cancelar</button>

@@ -1,9 +1,9 @@
-﻿@page "/api/Usuarios"
+﻿@page "/api/Productos"
 @inject IHttpServicio http
 
-<h3>Lista de Usuarios</h3>
+<h3>Lista de Productos</h3>
 <br />
-<a class="btn btn-primary mb-3" href="/api/Usuarios/crear">Nuevo usuario</a>
+<a class="btn btn-primary mb-3" href="/api/Productos/crear">Nuevo producto</a>
 <br />
 
 <!-- Tabla con estilos de Bootstrap -->
@@ -11,43 +11,45 @@
     <thead class="thead-dark">
         <tr>
             <th>Nombre</th>
-            <th>Email</th>
-            <th>Password</th>
+            <th>Descripción</th>
+            <th>Precio</th>
+            <th>Stock</th>
             <th>Acciones</th>
         </tr>
     </thead>
     <tbody>
         @if (Mensaje == "")
         {
-            @if (listaUsuarios == null)
+            @if (listaProductos == null)
             {
                 <tr>
-                    <td colspan="4" class="text-center">Buscando....</td>
+                    <td colspan="5" class="text-center">Buscando....</td>
                 </tr>
             }
-            else if (listaUsuarios.Count == 0)
+            else if (listaProductos.Count == 0)
             {
                 <tr>
-                    <td colspan="4" class="text-center">No existen los usuarios</td>
+                    <td colspan="5" class="text-center">No existen los productos</td>
                 </tr>
             }
             else
             {
-                @foreach (var item in listaUsuarios)
+                @foreach (var item in listaProductos)
                 {
                     <tr>
                         <td>@item.Nombre</td>
-                        <td>@item.Email</td>
-                        <td>@item.Password</td>
+                        <td>@item.Descripcion</td>
+                        <td>@item.Precio</td>
+                        <td>@item.Stock</td>
                         <td>
                             <!-- Botón de Editar -->
                             <a class="btn btn-primary btn-sm me-2"
-                               href="api/Usuarios/editar/@item.Id">
+                               href="api/Productos/editar/@item.Id">
                                 Editar
                             </a>
                             <!-- Botón de Borrar -->
                             <button class="btn btn-danger btn-sm"
-                                    @onclick="() => Eliminar(item)">
+                               @onclick="() => Eliminar(item)">
                                 Borrar
                             </button>
                         </td>
@@ -58,19 +60,18 @@
         else
         {
             <tr>
-                <td colspan="4" class="text-center text-danger">Error: @Mensaje</td>
+                <td colspan="5" class="text-center text-danger">Error: @Mensaje</td>
             </tr>
         }
     </tbody>
 </table>
-
 
 <Confirmacion @ref="confirmacion"
               Titulo="CUIDADO"
               textCancelar="Salir"
               onCancel="Cancelar"
               onConfirm="Borrar">
-              <h5>Está por borrar el usuario</h5>
+              <h5>Está por borrar el producto</h5>
               <br />
               <p>Está seguro?</p>
 </Confirmacion>
@@ -78,11 +79,11 @@
 @code {
     Confirmacion  confirmacion;
 
-    List<Usuario> listaUsuarios;
-    Usuario tUsuario;
+    List<Producto> listaProductos;
+    Producto Producto;
     string Mensaje = "";
 
-    Usuario? UsuaBorrar = null;//
+    Producto? ProducBorrar = null;
 
     protected override async Task OnInitializedAsync()
     {
@@ -92,10 +93,10 @@
 
     private async Task Leer()
     {
-        var resp = await http.Get<List<Usuario>>("api/Usuarios");
+        var resp = await http.Get<List<Producto>>("api/Productos");
         if (!resp.Error)
         {
-            listaUsuarios = resp.Respuesta;
+            listaProductos = resp.Respuesta;
         }
         else
         {
@@ -103,21 +104,21 @@
         }
     }
 
-    private async Task Eliminar(Usuario usuario)
+    private async Task Eliminar(Producto producto)
     {
-        UsuaBorrar = usuario;
+        ProducBorrar = producto;
         confirmacion.Ver();
     }
 
     private void Cancelar()
     {
         confirmacion.Ocultar();
-        UsuaBorrar = null;
+        ProducBorrar = null;
     }
 
     private async Task Borrar()
     {
-        var respuesta = await http.Delete($"api/Usuarios/{UsuaBorrar.Id}");
+        var respuesta = await http.Delete($"api/Productos/{ProducBorrar.Id}");
         if (respuesta.Error)
         {
             var body = "No se pudo borrar";
@@ -125,5 +126,4 @@
         Cancelar();
         await Leer();
     }
-
 }

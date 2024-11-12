@@ -1,48 +1,48 @@
-﻿@page "/api/Usuarios"
+﻿@page "/api/Carritos"
 @inject IHttpServicio http
 
-<h3>Lista de Usuarios</h3>
+<h3>Lista Carrito</h3>
 <br />
-<a class="btn btn-primary mb-3" href="/api/Usuarios/crear">Nuevo usuario</a>
+<a class="btn btn-primary mb-3" href="/api/Carritos/crear">Nuevo carrito</a>
 <br />
 
-<!-- Tabla con estilos de Bootstrap -->
+<!-- Estilos de la tabla con clases de Bootstrap -->
 <table class="table table-bordered table-striped">
     <thead class="thead-dark">
         <tr>
-            <th>Nombre</th>
-            <th>Email</th>
-            <th>Password</th>
+            <th>UsuarioId</th>
+            <th>OrdenId</th>
+            <th>Cantidad</th>
             <th>Acciones</th>
         </tr>
     </thead>
     <tbody>
         @if (Mensaje == "")
         {
-            @if (listaUsuarios == null)
+            @if (listaCarritos == null)
             {
                 <tr>
                     <td colspan="4" class="text-center">Buscando....</td>
                 </tr>
             }
-            else if (listaUsuarios.Count == 0)
+            else if (listaCarritos.Count == 0)
             {
                 <tr>
-                    <td colspan="4" class="text-center">No existen los usuarios</td>
+                    <td colspan="4" class="text-center">No existen los productos en el carrito</td>
                 </tr>
             }
             else
             {
-                @foreach (var item in listaUsuarios)
+                @foreach (var item in listaCarritos)
                 {
                     <tr>
-                        <td>@item.Nombre</td>
-                        <td>@item.Email</td>
-                        <td>@item.Password</td>
+                        <td>@item.UsuarioId</td>
+                        <td>@item.OrdenId</td>
+                        <td>@item.Cantidad</td>
                         <td>
                             <!-- Botón de Editar -->
                             <a class="btn btn-primary btn-sm me-2"
-                               href="api/Usuarios/editar/@item.Id">
+                               href="api/Carritos/editar/@item.Id">
                                 Editar
                             </a>
                             <!-- Botón de Borrar -->
@@ -70,7 +70,7 @@
               textCancelar="Salir"
               onCancel="Cancelar"
               onConfirm="Borrar">
-              <h5>Está por borrar el usuario</h5>
+              <h5>Está por borrar el carrito</h5>
               <br />
               <p>Está seguro?</p>
 </Confirmacion>
@@ -78,11 +78,11 @@
 @code {
     Confirmacion  confirmacion;
 
-    List<Usuario> listaUsuarios;
-    Usuario tUsuario;
+    List<Carrito> listaCarritos;
+    Carrito producto1;
     string Mensaje = "";
 
-    Usuario? UsuaBorrar = null;//
+    Carrito? CarBorrar = null;
 
     protected override async Task OnInitializedAsync()
     {
@@ -92,10 +92,10 @@
 
     private async Task Leer()
     {
-        var resp = await http.Get<List<Usuario>>("api/Usuarios");
+        var resp = await http.Get<List<Carrito>>("api/Carritos");
         if (!resp.Error)
         {
-            listaUsuarios = resp.Respuesta;
+            listaCarritos = resp.Respuesta;
         }
         else
         {
@@ -103,21 +103,21 @@
         }
     }
 
-    private async Task Eliminar(Usuario usuario)
+    private async Task Eliminar(Carrito carrito)
     {
-        UsuaBorrar = usuario;
+        CarBorrar = carrito;
         confirmacion.Ver();
     }
 
     private void Cancelar()
     {
         confirmacion.Ocultar();
-        UsuaBorrar = null;
+        CarBorrar = null;
     }
 
     private async Task Borrar()
     {
-        var respuesta = await http.Delete($"api/Usuarios/{UsuaBorrar.Id}");
+        var respuesta = await http.Delete($"api/Carritos/{CarBorrar.Id}");
         if (respuesta.Error)
         {
             var body = "No se pudo borrar";
@@ -125,5 +125,4 @@
         Cancelar();
         await Leer();
     }
-
 }

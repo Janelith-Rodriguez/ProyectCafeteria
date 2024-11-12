@@ -1,0 +1,81 @@
+﻿@page "/api/Ordenes/editar"
+@inject IHttpServicio http
+@inject NavigationManager navigationManager
+
+<h3>Editar Orden</h3>
+
+<h1>@lia</h1>
+
+<EditForm Model="Orden" OnValidSubmit="Grabar">
+    <DataAnnotationsValidator />
+    <div class="form-group">
+        <label>Fecha_Orden</label>
+        <div>
+            <InputDate class="form-control" @bind-Value="@Orden.Fecha_Orden" />
+            <ValidationMessage For="@(() => Orden.Fecha_Orden)" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Total</label>
+        <div>
+            <InputNumber class="form-control" @bind-Value="@Orden.Total" />
+            <ValidationMessage For="@(() => Orden.Total)" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Estado</label>
+        <div>
+            <InputText class="form-control" @bind-Value="@Orden.Estado" />
+            <ValidationMessage For="@(() => Orden.Estado)" />
+        </div>
+    </div>
+    <br />
+    <button class="btn btn-primary" type="submit">Aceptar</button>
+    <button class="btn btn-secondary" @onclick="Cancelar">Cancelar</button>
+</EditForm>
+
+@code {
+    [Parameter] public int OrdenId { get; set; }
+    private Orden Orden = new Orden();
+
+    string lia = "";
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        await Mostrar();
+    }
+
+    private async Task Mostrar()
+    {
+        var respuesta = await http.Get<Orden>($"api/Ordenes");
+
+        if (!respuesta.Error)
+        {
+            Orden = respuesta.Respuesta;
+        }
+        else
+        {
+            navigationManager.NavigateTo("/api/Ordenes");
+        }
+    }
+
+
+
+    private async Task Grabar()
+    {
+        //Usuario.Orden = new List<Orden>();
+
+        var httpRespuesta = await http.Put<Orden>($"api/Ordenes", Orden);
+        if (httpRespuesta.Error)
+        {
+            var body = httpRespuesta.HttpResponseMessage;
+        }
+        navigationManager.NavigateTo("/api/Ordenes");
+    }
+
+    private void Cancelar()
+    {
+        navigationManager.NavigateTo("/api/Ordenes");
+    }
+}
