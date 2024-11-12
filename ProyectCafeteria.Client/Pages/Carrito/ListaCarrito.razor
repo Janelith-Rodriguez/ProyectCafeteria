@@ -1,19 +1,21 @@
 ﻿@page "/api/Carritos"
 @inject IHttpServicio http
 
-<h3>Lista Carrito</h3>
-<br />
-<a class="btn btn-primary mb-3" href="/api/Carritos/crear">Nuevo carrito</a>
-<br />
+<h3 class="mb-4 text-center">Lista de Carrito</h3>
 
-<!-- Estilos de la tabla con clases de Bootstrap -->
-<table class="table table-bordered table-striped">
-    <thead class="thead-dark">
+<div class="d-flex justify-content-end mb-3">
+    <a class="btn btn-success" href="/api/Carritos/crear">
+        <i class="fas fa-plus"></i> Nuevo carrito
+    </a>
+</div>
+
+<table class="table table-hover table-bordered">
+    <thead class="bg-primary text-white text-center">
         <tr>
             <th>UsuarioId</th>
             <th>OrdenId</th>
             <th>Cantidad</th>
-            <th>Acciones</th>
+            <th style="width: 150px;">Acciones</th>
         </tr>
     </thead>
     <tbody>
@@ -22,13 +24,17 @@
             @if (listaCarritos == null)
             {
                 <tr>
-                    <td colspan="4" class="text-center">Buscando....</td>
+                    <td colspan="4" class="text-center text-secondary">
+                        <i class="fas fa-spinner fa-spin"></i> Buscando...
+                    </td>
                 </tr>
             }
             else if (listaCarritos.Count == 0)
             {
                 <tr>
-                    <td colspan="4" class="text-center">No existen los productos en el carrito</td>
+                    <td colspan="4" class="text-center text-warning">
+                        <i class="fas fa-exclamation-circle"></i> No existen productos en el carrito
+                    </td>
                 </tr>
             }
             else
@@ -39,16 +45,12 @@
                         <td>@item.UsuarioId</td>
                         <td>@item.OrdenId</td>
                         <td>@item.Cantidad</td>
-                        <td>
-                            <!-- Botón de Editar -->
-                            <a class="btn btn-primary btn-sm me-2"
-                               href="api/Carritos/editar/@item.Id">
-                                Editar
+                        <td class="text-center">
+                            <a class="btn btn-outline-primary btn-sm me-1" href="api/Carritos/editar/@item.Id">
+                                <i class="fas fa-edit"></i> Editar
                             </a>
-                            <!-- Botón de Borrar -->
-                            <button class="btn btn-danger btn-sm"
-                                    @onclick="() => Eliminar(item)">
-                                Borrar
+                            <button class="btn btn-outline-danger btn-sm" @onclick="() => Eliminar(item)">
+                                <i class="fas fa-trash-alt"></i> Borrar
                             </button>
                         </td>
                     </tr>
@@ -58,11 +60,14 @@
         else
         {
             <tr>
-                <td colspan="4" class="text-center text-danger">Error: @Mensaje</td>
+                <td colspan="4" class="text-center text-danger">
+                    <i class="fas fa-exclamation-triangle"></i> Error: @Mensaje
+                </td>
             </tr>
         }
     </tbody>
 </table>
+
 
 
 <Confirmacion @ref="confirmacion"

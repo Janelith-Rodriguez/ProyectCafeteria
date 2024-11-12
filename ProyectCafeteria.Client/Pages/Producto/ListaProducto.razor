@@ -1,20 +1,22 @@
 ﻿@page "/api/Productos"
 @inject IHttpServicio http
 
-<h3>Lista de Productos</h3>
-<br />
-<a class="btn btn-primary mb-3" href="/api/Productos/crear">Nuevo producto</a>
-<br />
+<h3 class="mb-4 text-center">Lista de Productos</h3>
 
-<!-- Tabla con estilos de Bootstrap -->
-<table class="table table-bordered table-striped">
-    <thead class="thead-dark">
+<div class="d-flex justify-content-end mb-3">
+    <a class="btn btn-success" href="/api/Productos/crear">
+        <i class="fas fa-plus"></i> Nuevo producto
+    </a>
+</div>
+
+<table class="table table-hover table-bordered">
+    <thead class="bg-primary text-white text-center">
         <tr>
             <th>Nombre</th>
             <th>Descripción</th>
             <th>Precio</th>
             <th>Stock</th>
-            <th>Acciones</th>
+            <th style="width: 150px;">Acciones</th>
         </tr>
     </thead>
     <tbody>
@@ -23,13 +25,17 @@
             @if (listaProductos == null)
             {
                 <tr>
-                    <td colspan="5" class="text-center">Buscando....</td>
+                    <td colspan="5" class="text-center text-secondary">
+                        <i class="fas fa-spinner fa-spin"></i> Buscando...
+                    </td>
                 </tr>
             }
             else if (listaProductos.Count == 0)
             {
                 <tr>
-                    <td colspan="5" class="text-center">No existen los productos</td>
+                    <td colspan="5" class="text-center text-warning">
+                        <i class="fas fa-exclamation-circle"></i> No existen productos
+                    </td>
                 </tr>
             }
             else
@@ -39,18 +45,14 @@
                     <tr>
                         <td>@item.Nombre</td>
                         <td>@item.Descripcion</td>
-                        <td>@item.Precio</td>
+                        <td>$@string.Format("{0:N2}", item.Precio)</td>
                         <td>@item.Stock</td>
-                        <td>
-                            <!-- Botón de Editar -->
-                            <a class="btn btn-primary btn-sm me-2"
-                               href="api/Productos/editar/@item.Id">
-                                Editar
+                        <td class="text-center">
+                            <a class="btn btn-outline-primary btn-sm me-1" href="api/Productos/editar/@item.Id">
+                                <i class="fas fa-edit"></i> Editar
                             </a>
-                            <!-- Botón de Borrar -->
-                            <button class="btn btn-danger btn-sm"
-                               @onclick="() => Eliminar(item)">
-                                Borrar
+                            <button class="btn btn-outline-danger btn-sm" @onclick="() => Eliminar(item)">
+                                <i class="fas fa-trash-alt"></i> Borrar
                             </button>
                         </td>
                     </tr>
@@ -60,11 +62,14 @@
         else
         {
             <tr>
-                <td colspan="5" class="text-center text-danger">Error: @Mensaje</td>
+                <td colspan="5" class="text-center text-danger">
+                    <i class="fas fa-exclamation-triangle"></i> Error: @Mensaje
+                </td>
             </tr>
         }
     </tbody>
 </table>
+
 
 <Confirmacion @ref="confirmacion"
               Titulo="CUIDADO"
